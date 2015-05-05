@@ -16,16 +16,15 @@ void Owen::tick() {
   temperature = getTemperature();
   
   pid.Compute();
-  DEBUG.println(pidValue);
   
-  
-  if (pidValue < 255) {
+  if (pidValue == 255) {
     setHeaterOn();
-  }
-  
-  if (pidValue == 0) {
+  } else {
     setHeaterOff();
   }
+  
+  DEBUG.print(pidValue);
+  DEBUG.print(",");
 }
 
 void Owen::setTargetTemperature(float temperature) {

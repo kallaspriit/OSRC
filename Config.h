@@ -9,4 +9,4 @@
 
 #define PID_P 2.0
 #define PID_I 5
-#define PID_D 1
+#define PID_D 10
