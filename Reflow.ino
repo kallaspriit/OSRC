@@ -38,7 +38,7 @@ void loop() {
     DEBUG.print("\t");
     DEBUG.print(owen.getProfile().getTargetTemperature(owen.getProfile().seconds));
     DEBUG.print("\t");
-    DEBUG.print(owen.getProfile().getTargetTemperature(owen.getProfile().seconds + 25));
+    DEBUG.print(owen.getProfile().getTargetTemperature(owen.getProfile().seconds + 30));
     DEBUG.print("\t");
     DEBUG.print(owen.getPidValue());
     DEBUG.print("\t");

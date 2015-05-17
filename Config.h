@@ -7,7 +7,7 @@
 
 #define DEBUG Serial
 
-#define PID_P 12
+#define PID_P 8
 #define PID_I 0.1
 #define PID_D 30
 

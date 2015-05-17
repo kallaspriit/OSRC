@@ -3,11 +3,11 @@
 
 ReflowProfile::ReflowProfile() {
   // timing
-  profile.heatingElementTime = 45.0f;
-  profile.preheatingTime = 75.0f;
+  profile.heatingElementTime = 40.0f;
+  profile.preheatingTime = 80.0f;
   profile.soakingTime = 80.0f;
-  profile.reflowTime = 30.0f;
-  profile.reflowingTime = 20.0f;
+  profile.reflowTime = 40.0f;
+  profile.reflowingTime = 1.0f;
   profile.coolingTime = 180.0f;
   
   // temperatures
