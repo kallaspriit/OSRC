@@ -1,6 +1,8 @@
 #ifndef REFLOWPROFILE_H
 #define REFLOWPROFILE_H
 
+#include <Arduino.h>
+
 /*
 * Temperature (Degree Celcius)                 Magic Happens Here!
 * 245-|                                               x  x  
@@ -27,48 +29,49 @@
 
 class ReflowProfile {
   
-  #define REFLOW_STATE_OFF 0
+  #define REFLOW_STATE_HEATING_ELEMENT 0
   #define REFLOW_STATE_PREHEAT 1
   #define REFLOW_STATE_SOAK 2
   #define REFLOW_STATE_REFLOW 3
-  #define REFLOW_STATE_PEAK 4
+  #define REFLOW_STATE_REFLOWING 4
   #define REFLOW_STATE_COOL 5
   
   public:
     struct Profile {
       // timing
-      float timeMultiplier;
-      float preheatTime;
+      float heatingElementTime;
+      float preheatingTime;
       float soakingTime;
       float reflowTime;
+      float reflowingTime;
       float peakTime;
       float coolingTime;
       
       // temperatures
       float startTemp;
-      float preheatTemp;
+      float heatingElementTemp;
+      float preheatingTemp;
       float soakingTemp;
       float reflowTemp;
+      float reflowingTemp;
       float coolingTemp;
     };
     
     ReflowProfile();
     void init();
-    void setState(int state);
+    void tick(float temp);
     float getTargetTemperature(int seconds);
-    float getPreheatTime();
-    float getSoakingTime();
-    float getReflowTime();
-    float getPeakTime();
-    float getCoolingTime();
-    float getStartTemp();
-    float getPreheatTemp();
-    float getSoakingTemp();
-    float getReflowTemp();
-    float getCoolingTemp();
+    int getStateByTime(int seconds);
+    int getStateSecondsByTime(int seconds);
+    void setStartTemp(float temp);
+    
+    int state;
+    int seconds;
     
   protected:
-    Profile profile;
+    void calculateState(float temp);
+    
+    Profile profile;    
 };
 
 #endif

@@ -10,69 +10,45 @@
 
 Owen owen = Owen();
 Relay relay = Relay(RELAY_PIN, LOW);
-ReflowProfile profile = ReflowProfile();
 
-int seconds = 0;
+int seconds = 1;
+
+long previousMillis = 0; 
 
 void setup() {
   DEBUG.begin(9600);
   owen.init(); 
 }
 
-void loop() {  
-  
-  if (owen.getTemperature() < 60) {
-    DEBUG.println(owen.getTemperature());
-    
-    owen.setTargetTemperature(60);
+void loop() {
+  if (millis() - previousMillis > 1000) {
+    previousMillis = millis();
+      
     owen.tick();
     owen.isHeaterOn() ? relay.setClosed() : relay.setOpen();
-    delay(1000);
-  } else {
-  
-    seconds += 1;
-  
-  
+    
+    
     DEBUG.print(seconds);
-    DEBUG.print(": ");
-    DEBUG.print(profile.getTargetTemperature(seconds));  
-    DEBUG.print(": ");
-    owen.setTargetTemperature(profile.getTargetTemperature(seconds));
-    
-    //owen.getTargetTemperature
-    
-    owen.tick();
-    owen.isHeaterOn() ? relay.setClosed() : relay.setOpen();
-    
-    
-    DEBUG.print(": ");
-    //DEBUG.println(owen.isHeaterOn());
-    DEBUG.println(owen.getTemperature());
+    DEBUG.print("\t");
+    DEBUG.print(owen.getProfile().state);
+    DEBUG.print("\t");
+    DEBUG.print(owen.getProfile().getStateSecondsByTime(owen.getProfile().seconds));
+    DEBUG.print("\t");
+    DEBUG.print(owen.getTemperature());
+    DEBUG.print("\t");
+    DEBUG.print(owen.getProfile().getTargetTemperature(owen.getProfile().seconds));
+    DEBUG.print("\t");
+    DEBUG.print(owen.getProfile().getTargetTemperature(owen.getProfile().seconds + 25));
+    DEBUG.print("\t");
+    DEBUG.print(owen.getPidValue());
+    DEBUG.print("\t");
+    DEBUG.println(owen.isHeaterOn() * 255);
+
   
-    delay(1000);
-    
-  }
-  
-  
-  
-  /*
-  DEBUG.print(seconds);
-  DEBUG.print(",");
-  
-  owen.setTargetTemperature(100);
-  owen.tick();
-  owen.isHeaterOn() ? relay.setClosed() : relay.setOpen();
-  
-  
-  //DEBUG.print(": ");
-  //DEBUG.println(owen.isHeaterOn());
- 
-  DEBUG.print(owen.isHeaterOn());
-  DEBUG.print(",");
-  
-  DEBUG.println(owen.getTemperature());
- 
+  //delay(1000);
   seconds++;
   
-  delay(1000);*/
+  
+  }
+  
 }

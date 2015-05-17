@@ -3,6 +3,7 @@
 
 #include <Arduino.h>
 #include <PID_v1.h>
+#include "ReflowProfile.h"
 
 class MAX6675;
 
@@ -19,6 +20,9 @@ class Owen {
     void setHeaterOff();
     boolean isHeaterOn();
     void setTargetTemperature(float temperature);
+    float getTargetTemperature();
+    float getPidValue();
+    ReflowProfile getProfile();
     
   protected:
     boolean heaterState;
@@ -27,6 +31,7 @@ class Owen {
     PID pid;
     float pidValue;
     MAX6675 *thermocouple;
+    ReflowProfile profile;
 };
 
 #endif
