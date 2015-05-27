@@ -3,22 +3,22 @@
 
 ReflowProfile::ReflowProfile() {
   // timing
-  profile.heatingElementTime = 40.0f;
-  profile.preheatingTime = 80.0f;
-  profile.soakingTime = 70.0f;
+//  profile.heatingElementTime = 40.0f;
+  profile.preheatingTime = 90.0f;
+  profile.soakingTime = 80.0f;
   profile.reflowTime = 30.0f;
-  profile.reflowingTime = 5.0f;
+  profile.reflowingTime = 30.0f;
   profile.coolingTime = 180.0f;
   
   // temperatures
-  profile.heatingElementTemp = 80.0f;
+//  profile.heatingElementTemp = 80.0f;
   profile.preheatingTemp = 150.0f;
-  profile.soakingTemp = 180.0f;
-  profile.reflowTemp = 225.0f;
-  profile.reflowingTemp = 225.0f;
+  profile.soakingTemp = 215.0f;
+  profile.reflowTemp = 250.0f;
+  profile.reflowingTemp = 250.0f;
   profile.coolingTemp = 50.0f;
   
-  state = REFLOW_STATE_HEATING_ELEMENT;
+  state = REFLOW_STATE_PREHEAT;
 }
 
 void ReflowProfile::tick(float temp) {
@@ -34,15 +34,15 @@ float ReflowProfile::getTargetTemperature(int seconds) {
   int direction = 1;
   
   switch (getStateByTime(seconds)) {
-    case REFLOW_STATE_HEATING_ELEMENT:
+    /*case REFLOW_STATE_HEATING_ELEMENT:
       time = profile.heatingElementTime;
       targetTemp = profile.heatingElementTemp;
       previousTargetTemp = profile.startTemp;
-      break;
+      break;*/
     case REFLOW_STATE_PREHEAT:
       time = profile.preheatingTime;
       targetTemp = profile.preheatingTemp;
-      previousTargetTemp = profile.heatingElementTemp;
+      previousTargetTemp = profile.startTemp;
       break;
     case REFLOW_STATE_SOAK:
       time = profile.soakingTime;
@@ -77,10 +77,10 @@ float ReflowProfile::getTargetTemperature(int seconds) {
 }
 
 int ReflowProfile::getStateByTime(int seconds) {
-  int time;
-  if ((time = profile.heatingElementTime) > seconds) {
+  int time = 0;
+  /*if ((time = profile.heatingElementTime) > seconds) {
     return REFLOW_STATE_HEATING_ELEMENT;
-  } else if ((time += profile.preheatingTime) > seconds) {
+  } else */if ((time += profile.preheatingTime) > seconds) {
     return REFLOW_STATE_PREHEAT;
   } else if ((time += profile.soakingTime) > seconds) {
     return REFLOW_STATE_SOAK;
@@ -96,19 +96,19 @@ int ReflowProfile::getStateByTime(int seconds) {
 }
 
 int ReflowProfile::getStateSecondsByTime(int seconds) {
-  int time;
-  if ((time = profile.heatingElementTime) > seconds) {
+  int time = 0;
+  /*if ((time = profile.heatingElementTime) > seconds) {
     return seconds;
-  } else if ((time += profile.preheatingTime) > seconds) {
-    return seconds - profile.heatingElementTime;
+  } else */if ((time += profile.preheatingTime) > seconds) {
+    return seconds/* - profile.heatingElementTime*/;
   } else if ((time += profile.soakingTime) > seconds) {
-    return seconds - profile.heatingElementTime - profile.preheatingTime;
+    return seconds/* - profile.heatingElementTime*/ - profile.preheatingTime;
   } else if ((time += profile.reflowTime) > seconds) {
-    return seconds - profile.heatingElementTime - profile.preheatingTime - profile.soakingTime;
+    return seconds/* - profile.heatingElementTime*/ - profile.preheatingTime - profile.soakingTime;
   } else if ((time += profile.reflowingTime) > seconds) {
-    return seconds - profile.heatingElementTime - profile.preheatingTime - profile.soakingTime - profile.reflowTime;
+    return seconds/* - profile.heatingElementTime*/ - profile.preheatingTime - profile.soakingTime - profile.reflowTime;
   } else if ((time += profile.coolingTime) > seconds) {
-    return seconds - profile.heatingElementTime - profile.preheatingTime - profile.soakingTime - profile.reflowTime - profile.reflowingTime;
+    return seconds/* - profile.heatingElementTime*/ - profile.preheatingTime - profile.soakingTime - profile.reflowTime - profile.reflowingTime;
   }
   
   return 0;

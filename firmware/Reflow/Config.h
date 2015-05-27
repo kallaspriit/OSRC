@@ -7,12 +7,12 @@
 
 #define DEBUG Serial
 
-#define PID_P 8
+#define PID_P 20
 #define PID_I 0.1
 #define PID_D 30
 
 #define PID_P_REFLOW 40
 #define PID_I_REFLOW 0.1
-#define PID_D_REFLOW 30
+#define PID_D_REFLOW 35
 
 #define STANDBY_TEMPERATURE 35

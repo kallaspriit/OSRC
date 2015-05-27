@@ -22,7 +22,7 @@ void Owen::tick() {
   
   profile.tick(temperature);
   
-  setTargetTemperature(profile.getTargetTemperature(profile.seconds + 35));
+  setTargetTemperature(profile.getTargetTemperature(profile.seconds + 10));
   
   pid.Compute();
   

@@ -29,7 +29,7 @@
 
 class ReflowProfile {
   
-  #define REFLOW_STATE_HEATING_ELEMENT 0
+//  #define REFLOW_STATE_HEATING_ELEMENT 0
   #define REFLOW_STATE_PREHEAT 1
   #define REFLOW_STATE_SOAK 2
   #define REFLOW_STATE_REFLOW 3
@@ -39,7 +39,7 @@ class ReflowProfile {
   public:
     struct Profile {
       // timing
-      float heatingElementTime;
+ //     float heatingElementTime;
       float preheatingTime;
       float soakingTime;
       float reflowTime;
@@ -49,7 +49,7 @@ class ReflowProfile {
       
       // temperatures
       float startTemp;
-      float heatingElementTemp;
+//      float heatingElementTemp;
       float preheatingTemp;
       float soakingTemp;
       float reflowTemp;
